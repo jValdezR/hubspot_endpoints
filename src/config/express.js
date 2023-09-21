@@ -14,9 +14,6 @@ app.use(express.urlencoded({ limit, extended: true }));
 if (debug === 'true') app.use(morgan('common'));
 app.use(helmet());
 app.use(cors({ origin: cors_allowed }));
-app.use('/', function (req, res) {
-    res.send('Welcome to hubspotbackend');
-  })
-app.use('/api', routes);
+app.use('/', routes);
 
 module.exports = app;

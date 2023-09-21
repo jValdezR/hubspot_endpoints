@@ -1,13 +1,5 @@
 const requiredEnvVariables = [
     'SERVER_PORT',
-    // 'SOCKET_PORT',
-    // 'HOSTDB',
-    // 'USERDB',
-    // 'PASSWORDDB',
-    // 'DATABASEDB',
-    // 'PORTDB',
-    // 'SECRET_KEY',
-    // 'JWT_EXPIRATION',
     'API_KEY_VALUE',
     'API_KEY_NAME'
   ];

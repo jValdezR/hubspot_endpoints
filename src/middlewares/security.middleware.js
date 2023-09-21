@@ -5,7 +5,6 @@ class SecurityMiddleware {
     try {
       const headers = {...req.headers};
       const {error} = await verifyApiKey().validateAsync(headers);
-      console.log(error);
       next();
     } catch (error) {
       res.status(401).json({ status: false, message: 'Unauthorized, invalid api-key', data: null });

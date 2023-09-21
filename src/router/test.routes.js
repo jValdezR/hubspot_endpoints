@@ -2,7 +2,7 @@ const {testGet, testPost} = require('../controllers/test.controller');
 const express = require('express');
 const {verifyPost} = require('../middlewares/test.middleware');
 
-const baseURL = 'test/';
+const baseURL = '/test/';
 
 const testRouter = express.Router();
 

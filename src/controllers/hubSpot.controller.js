@@ -44,7 +44,7 @@ class HubSpotController {
 
             if (org_name) {
                 try {
-                    let createCompanyResponse = await this.generateCompany(org_name)
+                    let createCompanyResponse = this.generateCompany(org_name);
                     await hubSpotAPI.crm.associations.v4.basicApi.create(
                         'companies',
                         createCompanyResponse.id,

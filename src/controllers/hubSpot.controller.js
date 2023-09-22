@@ -20,6 +20,7 @@ class HubSpotController {
                 return res;
                 
         } catch (error) {
+            console.log("1", error);
             throw error;
         }
         
@@ -57,10 +58,12 @@ class HubSpotController {
                         ]
                     )
                 } catch (error) {
+                    console.log("2", error);
                     throw error;
                 }
             }
         } catch (error) {
+            console.log("3", error);
             throw error;
         }
     }

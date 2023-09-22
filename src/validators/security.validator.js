@@ -1,8 +1,6 @@
 const Joi = require('joi');
 
 const { API_KEY_NAME, API_KEY_VALUE } = require('../config/vars').server;
-
-console.log(API_KEY_NAME, API_KEY_VALUE);
 class SecurityValidator {
   verifyApiKey = () => {
     const securityObj = {};

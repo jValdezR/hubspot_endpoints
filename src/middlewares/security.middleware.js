@@ -4,7 +4,6 @@ class SecurityMiddleware {
   async verifyApiKey(req, res, next) {
     try {
       const headers = {...req.headers};
-      console.log('headers', headers);
       const {error} = await verifyApiKey().validateAsync(headers);
       next();
     } catch (error) {

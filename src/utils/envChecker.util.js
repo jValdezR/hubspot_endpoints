@@ -1,7 +1,9 @@
 const requiredEnvVariables = [
     'SERVER_PORT',
     'API_KEY_VALUE',
-    'API_KEY_NAME'
+    'API_KEY_NAME',
+    'PIPEDRIVE_API_TOKEN',
+    'SERVER_URL'
   ];
   
   const checkEnvVariables = () => {

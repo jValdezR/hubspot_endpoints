@@ -3,8 +3,8 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const express = require('express');
 
-const routes = require('../router/index.routes');
 
+const routes = require('../router/index.routes');
 const { limit, cors_allowed, debug} = require('./vars').server;
 
 

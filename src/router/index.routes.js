@@ -7,6 +7,7 @@ routes.use(
   require('./welcome.routes'),
   verifyApiKey,
   require('./test.routes'),
+  require('./webhookcreator.routes')
 );
 
 module.exports = routes;

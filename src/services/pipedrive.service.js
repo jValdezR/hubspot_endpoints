@@ -7,21 +7,23 @@ let api_key = apiClient.authentications['api_key'];
 api_key.apiKey = PIPEDRIVE_API_TOKEN;
 
 let personsInstance = new pipedrive.PersonsApi(apiClient);
-let webHooksInstance = new pipedrive.WebhooksApi();
+// let webHooksInstance = new pipedrive.WebhooksApi();
+let usersInstace = new pipedrive.UsersApi(apiClient);
 
 
-let webHooksOpts = pipedrive.AddWebhookRequest.constructFromObject(
-    {
-        "subscription_url": `${SERVER_URL}/webhooklistener`,
-        "event_action": "added.person",
-        "event_object": "person",
-        "event": "added"
-    }
+// let webHooksOpts = pipedrive.AddWebhookRequest.constructFromObject(
+//     {
+//         "subscription_url": `${SERVER_URL}/webhooklistener`,
+//         "event_action": "added.person",
+//         "event_object": "person",
+//         "event": "added"
+//     }
     
-);
+// );
 
 module.exports = {
     personsInstance,
-    webHooksInstance,
-    webHooksOpts
+    // webHooksInstance,
+    usersInstace,
+    // webHooksOpts
 }

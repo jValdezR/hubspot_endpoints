@@ -1,8 +1,16 @@
-const hubSpotAPI = require('../services/hubspot.service')
+const hubSpotAPI = require('../services/hubspot.service');
+const { getUser } = require('./pipeDrive.controller');
 class HubSpotController {
 
     async addContact(body) {
-        const { first_name, org_name, email, last_name, phone } = body.current;
+        const { owner_id, first_name, org_name, email, last_name, phone } = body.current;
+
+        const {data} = getUser(owner_id);
+
+        console.log("data", data);
+        const owners = await hubSpotAPI.crm.owners.ownersApi.getPage();
+
+        console.log("owners", owners);
 
         const contactObj = {
             "properties": {
@@ -14,11 +22,11 @@ class HubSpotController {
             }
         };
 
-        try {
-            await hubSpotAPI.crm.contacts.basicApi.create(contactObj);
-        } catch (error) {
-            throw error;
-        }
+        // try {
+        //     await hubSpotAPI.crm.contacts.basicApi.create(contactObj);
+        // } catch (error) {
+        //     throw error;
+        // }
 
     }
 
@@ -27,7 +35,7 @@ class HubSpotController {
         console.log("body", body);
 
 
-        const { value, title, stage_id } = body.current;
+        const { value, title, stage_id, close_time } = body.current;
         let dealstage;
         switch (stage_id) {
             case 1:
@@ -59,7 +67,8 @@ class HubSpotController {
             "properties": {
                 "amount": value,
                 "dealname": title,
-                dealstage
+                dealstage,
+                "closedate": close_time
             }
         }
         try {

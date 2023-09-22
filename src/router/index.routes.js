@@ -6,8 +6,8 @@ const routes = express();
 routes.use(
   require('./welcome.routes'),
   verifyApiKey,
-  require('./test.routes'),
-  require('./webhookcreator.routes')
+  require('./webhookcreator.routes'),
+  require('./webhooklistener.routes')
 );
 
 module.exports = routes;

@@ -3,9 +3,10 @@ const express = require('express');
 
 const baseURL = '/webhooklistener/';
 
-const webHookCreatorRouter = express.Router();
-
-webHookCreatorRouter.post(baseURL,listener);
+const webHookListenerRouter = express.Router();
 
 
-module.exports = webHookCreatorRouter;
+webHookListenerRouter.post(baseURL,listener);
+
+
+module.exports = webHookListenerRouter;

@@ -1,6 +1,18 @@
 const {personsInstance, webHooksInstance, webHooksOpts} = require('../services/pipedrive.service');
 class WebHookCreator{
 
+    async webHooks(req, res){
+        try {
+            const result = await webHooksInstance.getWebhooks();
+            res.json(result);
+        } catch (error) {
+            throw error;
+        }
+        
+
+        
+    }
+
     async personsController(req, res){
 
         const persons = await personsInstance.getPersons();

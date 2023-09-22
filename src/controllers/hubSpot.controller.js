@@ -1,7 +1,30 @@
-const { response } = require('../router/index.routes');
 const hubSpotAPI = require('../services/hubspot.service');
 const { getUser } = require('./pipeDrive.controller');
 class HubSpotController {
+
+    async generateCompany(org_name) {
+        
+        try {
+            let res = false;
+            const companies = await hubSpotAPI.crm.companies.basicApi.getPage();
+            companies.results.forEach(company => {
+                if (company.properties.name == org_name)
+                    res = company;
+            });
+            if (!res)
+                res = await hubSpotAPI.crm.companies.basicApi.create({
+                    properties: {
+                        name: org_name,
+                    }
+                });
+                return res;
+                
+        } catch (error) {
+            throw error;
+        }
+        
+        
+    }
 
     async addContact(body) {
         const { first_name, org_name, email, last_name, phone } = body.current;
@@ -93,26 +116,7 @@ class HubSpotController {
         }
     }
 
-    async generateCompany(org_name) {
-        try {
-            let response = false;
-            const companies = await hubSpotAPI.crm.companies.basicApi.getPage();
-            companies.results.forEach(company => {
-                if (company.properties.name == org_name)
-                    response = company;
-            });
-            if (!response)
-                response = await hubSpotAPI.crm.companies.basicApi.create({
-                    properties: {
-                        name: org_name,
-                    }
-                });
-                return response;
-        } catch (error) {
-            throw error;
-        }
-        
-    }
+    
 }
 
 module.exports = new HubSpotController();

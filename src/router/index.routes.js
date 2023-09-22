@@ -5,9 +5,10 @@ const routes = express();
 
 routes.use(
   require('./welcome.routes'),
-  verifyApiKey,
-  require('./webhookcreator.routes'),
-  require('./webhooklistener.routes')
+  require('./webhooklistener.routes'),
+  // verifyApiKey,
+  // require('./webhookcreator.routes'),
+  
 );
 
 module.exports = routes;

@@ -11,7 +11,8 @@ const { limit, cors_allowed, debug} = require('./vars').server;
 const app = express();
 app.use(express.json({ limit }));
 app.use(express.urlencoded({ limit, extended: true }));
-if (debug === 'true') app.use(morgan('common'));
+// if (debug === 'true') 
+    app.use(morgan('tiny'));
 app.use(helmet());
 app.use(cors({ origin: cors_allowed }));
 app.use('/', routes);

@@ -12,9 +12,9 @@ class HubSpotController {
 
         // console.log("data", data.email);
         try {
-            const owner = await hubSpotAPI.crm.owners.ownersApi.getPage({ email: data.email });
+            const owner = await hubSpotAPI.crm.owners.ownersApi.getPage(data.email );
             console.log("owner", owner);
-            const companies = await hubSpotAPI.crm.companies.basicApi.getPage({ "name": org_name })
+            const companies = await hubSpotAPI.crm.companies.basicApi.getPage(undefined,undefined,[{name:org_name}])
             console.log("companies", companies);
             // console.log("owners", owners);
         } catch (error) {

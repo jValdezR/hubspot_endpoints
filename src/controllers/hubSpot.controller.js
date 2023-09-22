@@ -17,7 +17,7 @@ class HubSpotController {
         console.log("OBJ", contactObj);
 
         try {
-            const createContactResponse = await hubspotClient.crm.contacts.basicApi.create(contactObj);
+            const createContactResponse = await hubSpotAPI.crm.contacts.basicApi.create(contactObj);
             console.log("createContactResponse", createContactResponse);
         } catch (error) {
             console.log(error);

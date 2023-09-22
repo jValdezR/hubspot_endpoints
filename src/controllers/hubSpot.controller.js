@@ -9,7 +9,7 @@ class HubSpotController {
         const { data } = await getUser(owner_id);
 
         // let ownerId = null;
-        let companyId = false;
+        let companyObj = false;
 
         // console.log("data", data.email);
         try {
@@ -20,13 +20,13 @@ class HubSpotController {
             const companies = await hubSpotAPI.crm.companies.basicApi.getPage();
             companies.results.forEach(company => {
                 if(company.properties.name == org_name)
-                    companyId = company;
+                companyObj = company;
             });
-            
-            companyId = await hubSpotAPI.crm.companies.basicApi.create({properties: {
+            if(!companyObj)
+            companyObj = await hubSpotAPI.crm.companies.basicApi.create({properties: {
                 name: org_name,
             }});
-            console.log("companyId", companyId);
+            console.log("companyObj", companyObj);
 
             // await hubSpotAPI.crm.associations.v4.basicApi.create(
             //     'companies',

@@ -1,5 +1,4 @@
 require('dotenv').config();
-require('../utils/envChecker.util')
 
 module.exports = {
   server: {

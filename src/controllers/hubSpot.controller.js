@@ -105,13 +105,10 @@ class HubSpotController {
             }
         }
         try {
-            // await hubSpotAPI.crm.deals.basicApi.create(dealObj);
-            const person = await hubSpotAPI.crm.contacts.basicApi.getById(person_id);
-            console.log("person", person);
+            await hubSpotAPI.crm.deals.basicApi.create(dealObj);
 
 
         } catch (error) {
-            console.log(error);
             throw error;
         }
     }

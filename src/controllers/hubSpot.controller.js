@@ -12,12 +12,12 @@ class HubSpotController {
 
         // console.log("data", data.email);
         try {
-            // const owner = await hubSpotAPI.crm.owners.ownersApi.getPage(data.email);
-            const owner = await hubSpotAPI.crm.owners.ownersApi.getPage("mail@mail.com");
-            console.log("owner", owner);
-            const companies = await hubSpotAPI.crm.companies.basicApi.getPage(undefined, undefined,[org_name])
+            const owners = await hubSpotAPI.crm.owners.ownersApi.getPage(data.email);
+            if(owners.results.length != 0)
+                ownerId = owners.results[0].id;
+            console.log("ownerId", ownerId);
+            const companies = await hubSpotAPI.crm.companies.basicApi.getPage(undefined, undefined,org_name)
             console.log("companies", companies);
-            // console.log("owners", owners);
         } catch (error) {
             console.log(error);
         }

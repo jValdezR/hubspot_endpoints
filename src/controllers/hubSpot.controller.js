@@ -2,7 +2,7 @@ const hubSpotAPI = require('../services/hubspot.service');
 const { getUser } = require('./pipeDrive.controller');
 class HubSpotController {
 
-    async generateCompany(org_name) {
+    generateCompany = async(org_name) => {
         
         try {
             let res = false;
@@ -44,7 +44,7 @@ class HubSpotController {
 
             if (org_name) {
                 try {
-                    let createCompanyResponse = await this.generateCompany(org_name);
+                    let createCompanyResponse = await this.generateCompany(org_name)
                     await hubSpotAPI.crm.associations.v4.basicApi.create(
                         'companies',
                         createCompanyResponse.id,

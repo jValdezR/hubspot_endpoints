@@ -6,16 +6,21 @@ class HubSpotController {
         console.log("body contact de pipedrive", body);
         const { owner_id, first_name, org_name, email, last_name, phone } = body.current;
 
-        const {data} = await getUser(owner_id);
+        const { data } = await getUser(owner_id);
 
         let ownerId = null;
 
         // console.log("data", data.email);
-        const owner = await hubSpotAPI.crm.owners.ownersApi.getPage({"email":data.email});
-        console.log("owner", owner);
-        const companies = await hubSpotAPI.crm.companies.basicApi.getPage({"name":org_name})
-        console.log("companies", companies);
-        // console.log("owners", owners);
+        try {
+            const owner = await hubSpotAPI.crm.owners.ownersApi.getPage({ email: data.email });
+            console.log("owner", owner);
+            const companies = await hubSpotAPI.crm.companies.basicApi.getPage({ "name": org_name })
+            console.log("companies", companies);
+            // console.log("owners", owners);
+        } catch (error) {
+            console.log(error);
+        }
+
 
 
 
@@ -65,9 +70,9 @@ class HubSpotController {
                 dealstage = "contractsent";
                 break;
 
-                default:
-                     dealstage = "appointmentscheduled";
-                     break;
+            default:
+                dealstage = "appointmentscheduled";
+                break;
 
         }
 

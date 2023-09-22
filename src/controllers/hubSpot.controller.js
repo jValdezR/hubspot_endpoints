@@ -2,9 +2,11 @@ const hubSpotAPI = require('../services/hubspot.service')
 class HubSpotController {
 
     async addContact(body) {
+        console.log("Entrando a addContact");
         const {first_name, org_name, email, last_name, phone} = body.current;
+        
         const contactObj = {
-            properties: {
+            "properties": {
                 "email": email[0].value,
                 "firstname": first_name,
                 "lastname": last_name,
@@ -12,6 +14,7 @@ class HubSpotController {
                 "company": org_name,
               }
         };
+        console.log("OBJ", contactObj);
 
         try {
             const createContactResponse = await hubspotClient.crm.contacts.basicApi.create(contactObj);

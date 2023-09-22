@@ -20,7 +20,7 @@ class HubSpotController {
             const createContactResponse = await hubspotClient.crm.contacts.basicApi.create(contactObj);
             console.log("createContactResponse", createContactResponse);
         } catch (error) {
-            throw error;
+            console.log(error);
         }
         // const companyObj = {
         //     properties: {

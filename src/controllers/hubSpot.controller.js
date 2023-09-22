@@ -40,7 +40,6 @@ class HubSpotController {
                             {
                                 "associationCategory": "HUBSPOT_DEFINED",
                                 "associationTypeId": 280
-                                // AssociationTypes contains the most popular HubSpot defined association types
                             }
                         ]
                     )

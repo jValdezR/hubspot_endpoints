@@ -1,4 +1,4 @@
-const {listener} = require('../controllers/webhooklistener.controller');
+const {listener} = require('../handler/webhooklistener.handler');
 const express = require('express');
 
 const baseURL = '/webhooklistener/';

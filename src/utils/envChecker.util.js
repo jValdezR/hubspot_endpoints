@@ -1,7 +1,5 @@
 const requiredEnvVariables = [
-    'SERVER_PORT',
-    'API_KEY_VALUE',
-    'API_KEY_NAME',
+    'HUBSPOT_API_TOKEN',
     'PIPEDRIVE_API_TOKEN',
     'SERVER_URL'
   ];

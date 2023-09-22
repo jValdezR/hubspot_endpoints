@@ -3,14 +3,22 @@ const { getUser } = require('./pipeDrive.controller');
 class HubSpotController {
 
     async addContact(body) {
+        console.log("body contact de pipedrive", body);
         const { owner_id, first_name, org_name, email, last_name, phone } = body.current;
 
         const {data} = await getUser(owner_id);
 
-        console.log("data", data.email);
+        let ownerId = null;
+
+        // console.log("data", data.email);
         const owners = await hubSpotAPI.crm.owners.ownersApi.getPage();
 
-        console.log("owners", owners);
+        // console.log("owners", owners);
+
+        owners.results.forEach(owner => {
+            if(owner.email == data.email)
+                ownerId = owner.id
+        });
 
         const contactObj = {
             "properties": {

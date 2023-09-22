@@ -2,7 +2,6 @@ const hubSpotAPI = require('../services/hubspot.service')
 class HubSpotController {
 
     async addContact(body) {
-        console.log("Entrando a addContact");
         const {first_name, org_name, email, last_name, phone} = body.current;
         
         const contactObj = {
@@ -14,40 +13,30 @@ class HubSpotController {
                 "company": org_name,
               }
         };
-        console.log("OBJ", contactObj);
 
         try {
-            const createContactResponse = await hubSpotAPI.crm.contacts.basicApi.create(contactObj);
-            console.log("createContactResponse", createContactResponse);
+            await hubSpotAPI.crm.contacts.basicApi.create(contactObj);
         } catch (error) {
-            console.log(error);
+            throw error;
         }
-        // const companyObj = {
-        //     properties: {
-        //         domain: "Org",
-        //         name: "APIORG",
-        //     },
-        // };
-        
-
-        // const createCompanyResponse = await hubspotClient.crm.companies.basicApi.create(companyObj);
-        // await hubspotClient.crm.associations.v4.basicApi.create(
-        //     'companies',
-        //     createCompanyResponse.id,
-        //     'contacts',
-        //     createContactResponse.id,
-        //     [
-        //         {
-        //             "associationCategory": "HUBSPOT_DEFINED",
-        //             "associationTypeId": AssociationTypes.companyToContact
-        //             // AssociationTypes contains the most popular HubSpot defined association types
-        //         }
-        //     ]
-        // )
+    
     }
 
     async addDeal(body){
 
+        console.log("body", body);
+
+        const {first_name, org_name, email, last_name, phone} = body.current;
+        const dealObj = {
+            "properties": {
+              "amount": "1500.00",
+              "closedate": "2019-12-07T16:50:06.678Z",
+              "dealname": "New deal",
+              "pipeline": "default",
+              "dealstage": "contractsent",
+              "hubspot_owner_id": "910901"
+            }
+          }
     }
 }
 

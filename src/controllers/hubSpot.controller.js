@@ -16,8 +16,8 @@ class HubSpotController {
             if(owners.results.length != 0)
                 ownerId = owners.results[0].id;
             console.log("ownerId", ownerId);
-            const companies = await hubSpotAPI.crm.companies.basicApi.getPage(undefined, undefined,org_name)
-            console.log("companies", companies);
+            const companies = await hubSpotAPI.crm.companies.basicApi.getPage();
+            console.log("companies", companies.results);
         } catch (error) {
             console.log(error);
         }

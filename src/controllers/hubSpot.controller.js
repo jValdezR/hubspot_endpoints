@@ -11,14 +11,14 @@ class HubSpotController {
         let ownerId = null;
 
         // console.log("data", data.email);
-        const owners = await hubSpotAPI.crm.owners.ownersApi.getPage();
-
+        const owner = await hubSpotAPI.crm.owners.ownersApi.getPage({"email":data.email});
+        console.log("owner", owner);
+        const companies = await hubSpotAPI.crm.companies.basicApi.getPage({"name":org_name})
+        console.log("companies", companies);
         // console.log("owners", owners);
 
-        owners.results.forEach(owner => {
-            if(owner.email == data.email)
-                ownerId = owner.id
-        });
+
+
 
         const contactObj = {
             "properties": {

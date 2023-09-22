@@ -5,7 +5,6 @@ class pipeDriveController{
 
 async getUser(id){
     return await usersInstace.getUser(id);
-
 }
 
 }

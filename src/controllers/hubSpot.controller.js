@@ -29,6 +29,8 @@ class HubSpotController {
                     }
                 });
 
+                console.log("companyResponse", createCompanyResponse);
+
             const contactObj = {
                 "properties": {
                     "email": email[0].value,
@@ -55,6 +57,7 @@ class HubSpotController {
             )
         } catch (error) {
             console.log(error);
+            throw error;
         }
 
 

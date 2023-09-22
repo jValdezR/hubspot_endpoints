@@ -1,5 +1,4 @@
 const hubSpotAPI = require('../services/hubspot.service');
-const { getUser } = require('./pipeDrive.controller');
 class HubSpotController {
 
     async addContact(body) {
@@ -70,7 +69,7 @@ class HubSpotController {
         console.log("body", body);
 
 
-        const { value, title, stage_id, expected_close_date } = body.current;
+        const { value, title, stage_id, expected_close_date, org_name, person_id} = body.current;
         let dealstage;
         switch (stage_id) {
             case 1:
@@ -106,7 +105,10 @@ class HubSpotController {
             }
         }
         try {
-            await hubSpotAPI.crm.deals.basicApi.create(dealObj);
+            // await hubSpotAPI.crm.deals.basicApi.create(dealObj);
+            const person = await hubSpotAPI.crm.contacts.basicApi.getById(person_id);
+            console.log("person", person);
+
 
         } catch (error) {
             console.log(error);

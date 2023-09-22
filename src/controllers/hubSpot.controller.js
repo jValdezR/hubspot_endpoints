@@ -7,7 +7,7 @@ class HubSpotController {
 
         const {data} = await getUser(owner_id);
 
-        console.log("data", data);
+        console.log("data", data.email);
         const owners = await hubSpotAPI.crm.owners.ownersApi.getPage();
 
         console.log("owners", owners);

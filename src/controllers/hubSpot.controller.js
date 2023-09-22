@@ -4,12 +4,12 @@ class HubSpotController {
 
     async addContact(body) {
         console.log("body contact de pipedrive", body);
-        const { owner_id, first_name, org_name, email, last_name, phone } = body.current;
+        const { first_name, org_name, email, last_name, phone } = body.current;
 
-        const { data } = await getUser(owner_id);
+        // const { data } = await getUser(owner_id);
 
         // let ownerId = null;
-        let companyObj = false;
+        let createCompanyResponse = false;
 
         // console.log("data", data.email);
         try {
@@ -19,28 +19,40 @@ class HubSpotController {
             // console.log("ownerId", ownerId);
             const companies = await hubSpotAPI.crm.companies.basicApi.getPage();
             companies.results.forEach(company => {
-                if(company.properties.name == org_name)
-                companyObj = company;
+                if (company.properties.name == org_name)
+                    createCompanyResponse = company;
             });
-            if(!companyObj)
-            companyObj = await hubSpotAPI.crm.companies.basicApi.create({properties: {
-                name: org_name,
-            }});
-            console.log("companyObj", companyObj);
+            if (!createCompanyResponse)
+                createCompanyResponse = await hubSpotAPI.crm.companies.basicApi.create({
+                    properties: {
+                        name: org_name,
+                    }
+                });
 
-            // await hubSpotAPI.crm.associations.v4.basicApi.create(
-            //     'companies',
-            //     createCompanyResponse.id,
-            //     'contacts',
-            //     createContactResponse.id,
-            //     [
-            //         {
-            //               "associationCategory": "HUBSPOT_DEFINED",
-            //               "associationTypeId": AssociationTypes.companyToContact 
-            //               // AssociationTypes contains the most popular HubSpot defined association types
-            //         }
-            //     ]
-            // )
+            const contactObj = {
+                "properties": {
+                    "email": email[0].value,
+                    "firstname": first_name,
+                    "lastname": last_name,
+                    "phone": phone[0].value,
+                    "company": org_name,
+                }
+            };
+            const createContactResponse = await hubSpotAPI.crm.contacts.basicApi.create(contactObj);
+
+            await hubSpotAPI.crm.associations.v4.basicApi.create(
+                'companies',
+                createCompanyResponse.id,
+                'contacts',
+                createContactResponse.id,
+                [
+                    {
+                        "associationCategory": "HUBSPOT_DEFINED",
+                        "associationTypeId": AssociationTypes.companyToContact
+                        // AssociationTypes contains the most popular HubSpot defined association types
+                    }
+                ]
+            )
         } catch (error) {
             console.log(error);
         }
@@ -49,21 +61,8 @@ class HubSpotController {
 
 
 
-        const contactObj = {
-            "properties": {
-                "email": email[0].value,
-                "firstname": first_name,
-                "lastname": last_name,
-                "phone": phone[0].value,
-                "company": org_name,
-            }
-        };
 
-        // try {
-        //     await hubSpotAPI.crm.contacts.basicApi.create(contactObj);
-        // } catch (error) {
-        //     throw error;
-        // }
+
 
     }
 

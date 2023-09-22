@@ -1,9 +1,9 @@
+const { response } = require('../router/index.routes');
 const hubSpotAPI = require('../services/hubspot.service');
 const { getUser } = require('./pipeDrive.controller');
 class HubSpotController {
 
     async addContact(body) {
-        // console.log("body contact de pipedrive", body);
         const { first_name, org_name, email, last_name, phone } = body.current;
 
         const contactObj = {
@@ -19,19 +19,8 @@ class HubSpotController {
             const createContactResponse = await hubSpotAPI.crm.contacts.basicApi.create(contactObj);
 
             if (org_name) {
-                let createCompanyResponse = false;
                 try {
-                    const companies = await hubSpotAPI.crm.companies.basicApi.getPage();
-                    companies.results.forEach(company => {
-                        if (company.properties.name == org_name)
-                            createCompanyResponse = company;
-                    });
-                    if (!createCompanyResponse)
-                        createCompanyResponse = await hubSpotAPI.crm.companies.basicApi.create({
-                            properties: {
-                                name: org_name,
-                            }
-                        });
+                    let createCompanyResponse = await this.generateCompany(org_name);
                     await hubSpotAPI.crm.associations.v4.basicApi.create(
                         'companies',
                         createCompanyResponse.id,
@@ -41,7 +30,6 @@ class HubSpotController {
                             {
                                 "associationCategory": "HUBSPOT_DEFINED",
                                 "associationTypeId": 280
-                                // AssociationTypes contains the most popular HubSpot defined association types
                             }
                         ]
                     )
@@ -52,20 +40,9 @@ class HubSpotController {
         } catch (error) {
             throw error;
         }
-
-        
-
-
-
-
-
-
-
-
-
-
-
     }
+
+
 
     async addDeal(body) {
 
@@ -114,6 +91,27 @@ class HubSpotController {
             console.log(error);
             throw error;
         }
+    }
+
+    async generateCompany(org_name) {
+        try {
+            let response = false;
+            const companies = await hubSpotAPI.crm.companies.basicApi.getPage();
+            companies.results.forEach(company => {
+                if (company.properties.name == org_name)
+                    response = company;
+            });
+            if (!response)
+                response = await hubSpotAPI.crm.companies.basicApi.create({
+                    properties: {
+                        name: org_name,
+                    }
+                });
+                return response;
+        } catch (error) {
+            throw error;
+        }
+        
     }
 }
 

@@ -2,7 +2,7 @@
 class WebHookListener{
 
     async listener(req, res){
-        console.log(req);
+        console.log(req.body);
         res.send("ok");
     }
 }

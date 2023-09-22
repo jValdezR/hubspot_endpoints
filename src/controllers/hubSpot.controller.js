@@ -5,7 +5,7 @@ class HubSpotController {
     async addContact(body) {
         const { owner_id, first_name, org_name, email, last_name, phone } = body.current;
 
-        const {data} = getUser(owner_id);
+        const {data} = await getUser(owner_id);
 
         console.log("data", data);
         const owners = await hubSpotAPI.crm.owners.ownersApi.getPage();

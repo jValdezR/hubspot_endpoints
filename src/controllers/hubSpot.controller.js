@@ -3,20 +3,19 @@ class HubSpotController {
 
     async addContact(body) {
         const {first_name, org_name, email, last_name, phone} = body.current;
-        console.log("email", email);
-        console.log("phone", phone);
         const contactObj = {
             properties: {
-                email,
+                "email": email[0].value,
                 "firstname": first_name,
                 "lastname": last_name,
-                phone,
+                "phone": phone[0].value,
                 "company": org_name,
               }
         };
 
         try {
             const createContactResponse = await hubspotClient.crm.contacts.basicApi.create(contactObj);
+            console.log("createContactResponse", createContactResponse);
         } catch (error) {
             throw error;
         }

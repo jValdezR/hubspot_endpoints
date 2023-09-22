@@ -3,62 +3,60 @@ const { getUser } = require('./pipeDrive.controller');
 class HubSpotController {
 
     async addContact(body) {
-        console.log("body contact de pipedrive", body);
+        // console.log("body contact de pipedrive", body);
         const { first_name, org_name, email, last_name, phone } = body.current;
 
-        // const { data } = await getUser(owner_id);
-
-        // let ownerId = null;
-        let createCompanyResponse = false;
-
-        // console.log("data", data.email);
+        const contactObj = {
+            "properties": {
+                "email": email[0].value,
+                "firstname": first_name,
+                "lastname": last_name,
+                "phone": phone[0].value,
+                "company": org_name,
+            }
+        };
         try {
-            // const owners = await hubSpotAPI.crm.owners.ownersApi.getPage(data.email);
-            // if(owners.results.length != 0)
-            //     ownerId = owners.results[0].id;
-            // console.log("ownerId", ownerId);
-            const companies = await hubSpotAPI.crm.companies.basicApi.getPage();
-            companies.results.forEach(company => {
-                if (company.properties.name == org_name)
-                    createCompanyResponse = company;
-            });
-            if (!createCompanyResponse)
-                createCompanyResponse = await hubSpotAPI.crm.companies.basicApi.create({
-                    properties: {
-                        name: org_name,
-                    }
-                });
-
-                console.log("companyResponse", createCompanyResponse);
-
-            const contactObj = {
-                "properties": {
-                    "email": email[0].value,
-                    "firstname": first_name,
-                    "lastname": last_name,
-                    "phone": phone[0].value,
-                    "company": org_name,
-                }
-            };
             const createContactResponse = await hubSpotAPI.crm.contacts.basicApi.create(contactObj);
 
-            await hubSpotAPI.crm.associations.v4.basicApi.create(
-                'companies',
-                createCompanyResponse.id,
-                'contacts',
-                createContactResponse.id,
-                [
-                    {
-                        "associationCategory": "HUBSPOT_DEFINED",
-                        "associationTypeId": 280
-                        // AssociationTypes contains the most popular HubSpot defined association types
-                    }
-                ]
-            )
+            if (org_name) {
+                let createCompanyResponse = false;
+                try {
+                    const companies = await hubSpotAPI.crm.companies.basicApi.getPage();
+                    companies.results.forEach(company => {
+                        if (company.properties.name == org_name)
+                            createCompanyResponse = company;
+                    });
+                    if (!createCompanyResponse)
+                        createCompanyResponse = await hubSpotAPI.crm.companies.basicApi.create({
+                            properties: {
+                                name: org_name,
+                            }
+                        });
+                    await hubSpotAPI.crm.associations.v4.basicApi.create(
+                        'companies',
+                        createCompanyResponse.id,
+                        'contacts',
+                        createContactResponse.id,
+                        [
+                            {
+                                "associationCategory": "HUBSPOT_DEFINED",
+                                "associationTypeId": 280
+                                // AssociationTypes contains the most popular HubSpot defined association types
+                            }
+                        ]
+                    )
+                } catch (error) {
+                    throw error;
+                }
+            }
         } catch (error) {
-            console.log(error);
             throw error;
         }
+
+        
+
+
+
 
 
 
@@ -74,7 +72,7 @@ class HubSpotController {
         console.log("body", body);
 
 
-        const { value, title, stage_id, close_time } = body.current;
+        const { value, title, stage_id, expected_close_date } = body.current;
         let dealstage;
         switch (stage_id) {
             case 1:
@@ -95,7 +93,6 @@ class HubSpotController {
             case 6:
                 dealstage = "contractsent";
                 break;
-
             default:
                 dealstage = "appointmentscheduled";
                 break;
@@ -107,7 +104,7 @@ class HubSpotController {
                 "amount": value,
                 "dealname": title,
                 dealstage,
-                "closedate": close_time
+                "closedate": expected_close_date
             }
         }
         try {

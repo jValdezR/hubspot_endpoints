@@ -9,7 +9,16 @@ api_key.apiKey = PIPEDRIVE_API_TOKEN;
 let personsInstance = new pipedrive.PersonsApi(apiClient);
 let webHooksInstance = new pipedrive.WebhooksApi();
 
-let webHooksOpts = pipedrive.AddWebhookRequest(`${SERVER_URL}/webhooklistener`, 'added.person');
+
+let webHooksOpts = pipedrive.AddWebhookRequest.constructFromObject(
+    {
+        "subscription_url": `${SERVER_URL}/webhooklistener`,
+        "event_action": "added.person",
+        "event_object": "person",
+        "event": "added"
+    }
+    
+);
 
 module.exports = {
     personsInstance,

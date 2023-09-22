@@ -26,17 +26,21 @@ class HubSpotController {
 
         console.log("body", body);
 
-        const {first_name, org_name, email, last_name, phone} = body.current;
+
+        const {value, person_name} = body.current;
         const dealObj = {
             "properties": {
-              "amount": "1500.00",
-              "closedate": "2019-12-07T16:50:06.678Z",
-              "dealname": "New deal",
-              "pipeline": "default",
-              "dealstage": "contractsent",
-              "hubspot_owner_id": "910901"
+              "amount": value,
+              "dealname": person_name,
             }
           }
+          try {
+            await hubSpotAPI.crm.deals.basicApi.create(dealObj);
+            
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
     }
 }
 

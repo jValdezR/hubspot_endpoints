@@ -17,7 +17,6 @@ class WebHookListener {
                     // Handle the event as a contact addition
                     await addContact(req.body);
                 } else {
-                    console.log("It's a deal");
                     // Handle the event as a deal addition
                     await addDeal(req.body);
                 }

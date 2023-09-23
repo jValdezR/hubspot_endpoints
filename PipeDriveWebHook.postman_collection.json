@@ -1,0 +1,518 @@
+{
+	"info": {
+		"_postman_id": "a3bcfcbd-5176-4f59-b7ae-c6a68ffcde2f",
+		"name": "PipeDriveWebHook",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10884660"
+	},
+	"item": [
+		{
+			"name": "Webhook",
+			"item": [
+				{
+					"name": "Create a new Webhook for person",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subscription_url\": \"{{serverURL}}/webhooklistener/\",\n  \"event_action\": \"added\",\n  \"event_object\": \"person\",\n  \"version\": \"1.0\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/webhooks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"webhooks"
+							]
+						},
+						"description": "Creates a new Webhook and returns its details. Note that specifying an event which triggers the Webhook combines 2 parameters - `event_action` and `event_object`. E.g., use `*.*` for getting notifications about all events, `added.deal` for any newly added deals, `deleted.persons` for any deleted persons, etc. See <a href=\"https://pipedrive.readme.io/docs/guide-for-webhooks?ref=api_reference\" target=\"_blank\" rel=\"noopener noreferrer\">the guide for Webhooks</a> for more details."
+					},
+					"response": [
+						{
+							"name": "The created webhook object",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"subscription_url\": \"<string>\",\n  \"event_action\": \"<string>\",\n  \"event_object\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"http_auth_user\": \"<string>\",\n  \"http_auth_password\": \"<string>\",\n  \"version\": \"1.0\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/webhooks?api_token=<API Key>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"webhooks"
+									],
+									"query": [
+										{
+											"key": "api_token",
+											"value": "<API Key>"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"status\": \"ok\",\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"company_id\": 1,\n    \"owner_id\": 1,\n    \"user_id\": 1,\n    \"event_action\": \"added\",\n    \"event_object\": \"activityType\",\n    \"subscription_url\": \"http://example.org\",\n    \"version\": \"1.0\",\n    \"is_active\": 1,\n    \"add_time\": \"2019-10-25T08:25:27.000Z\",\n    \"remove_time\": null,\n    \"type\": \"general\",\n    \"http_auth_user\": null,\n    \"http_auth_password\": null,\n    \"additional_data\": {},\n    \"remove_reason\": null,\n    \"last_delivery_time\": null,\n    \"last_http_status\": null,\n    \"admin_id\": 1\n  }\n}"
+						},
+						{
+							"name": "The bad response on webhook creation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"subscription_url\": \"<string>\",\n  \"event_action\": \"<string>\",\n  \"event_object\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"http_auth_user\": \"<string>\",\n  \"http_auth_password\": \"<string>\",\n  \"version\": \"1.0\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/webhooks?api_token=<API Key>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"webhooks"
+									],
+									"query": [
+										{
+											"key": "api_token",
+											"value": "<API Key>"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"status\": \"error\",\n  \"success\": false,\n  \"errors\": {\n    \"subscription_url\": [\n      \"invalid or non-reachable URL\"\n    ]\n  }\n}"
+						},
+						{
+							"name": "Unauthorized response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"subscription_url\": \"<string>\",\n  \"event_action\": \"<string>\",\n  \"event_object\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"http_auth_user\": \"<string>\",\n  \"http_auth_password\": \"<string>\",\n  \"version\": \"1.0\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/webhooks?api_token=<API Key>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"webhooks"
+									],
+									"query": [
+										{
+											"key": "api_token",
+											"value": "<API Key>"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": false,\n  \"error\": \"unauthorized access\",\n  \"errorCode\": 401\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a new Webhook for deal",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subscription_url\": \"{{serverURL}}/webhooklistener/\",\n  \"event_action\": \"added\",\n  \"event_object\": \"deal\",\n  \"version\": \"1.0\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/webhooks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"webhooks"
+							]
+						},
+						"description": "Creates a new Webhook and returns its details. Note that specifying an event which triggers the Webhook combines 2 parameters - `event_action` and `event_object`. E.g., use `*.*` for getting notifications about all events, `added.deal` for any newly added deals, `deleted.persons` for any deleted persons, etc. See <a href=\"https://pipedrive.readme.io/docs/guide-for-webhooks?ref=api_reference\" target=\"_blank\" rel=\"noopener noreferrer\">the guide for Webhooks</a> for more details."
+					},
+					"response": [
+						{
+							"name": "The created webhook object",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"subscription_url\": \"<string>\",\n  \"event_action\": \"<string>\",\n  \"event_object\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"http_auth_user\": \"<string>\",\n  \"http_auth_password\": \"<string>\",\n  \"version\": \"1.0\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/webhooks?api_token=<API Key>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"webhooks"
+									],
+									"query": [
+										{
+											"key": "api_token",
+											"value": "<API Key>"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"status\": \"ok\",\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"company_id\": 1,\n    \"owner_id\": 1,\n    \"user_id\": 1,\n    \"event_action\": \"added\",\n    \"event_object\": \"activityType\",\n    \"subscription_url\": \"http://example.org\",\n    \"version\": \"1.0\",\n    \"is_active\": 1,\n    \"add_time\": \"2019-10-25T08:25:27.000Z\",\n    \"remove_time\": null,\n    \"type\": \"general\",\n    \"http_auth_user\": null,\n    \"http_auth_password\": null,\n    \"additional_data\": {},\n    \"remove_reason\": null,\n    \"last_delivery_time\": null,\n    \"last_http_status\": null,\n    \"admin_id\": 1\n  }\n}"
+						},
+						{
+							"name": "The bad response on webhook creation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"subscription_url\": \"<string>\",\n  \"event_action\": \"<string>\",\n  \"event_object\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"http_auth_user\": \"<string>\",\n  \"http_auth_password\": \"<string>\",\n  \"version\": \"1.0\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/webhooks?api_token=<API Key>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"webhooks"
+									],
+									"query": [
+										{
+											"key": "api_token",
+											"value": "<API Key>"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"status\": \"error\",\n  \"success\": false,\n  \"errors\": {\n    \"subscription_url\": [\n      \"invalid or non-reachable URL\"\n    ]\n  }\n}"
+						},
+						{
+							"name": "Unauthorized response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"subscription_url\": \"<string>\",\n  \"event_action\": \"<string>\",\n  \"event_object\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"http_auth_user\": \"<string>\",\n  \"http_auth_password\": \"<string>\",\n  \"version\": \"1.0\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/webhooks?api_token=<API Key>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"webhooks"
+									],
+									"query": [
+										{
+											"key": "api_token",
+											"value": "<API Key>"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": false,\n  \"error\": \"unauthorized access\",\n  \"errorCode\": 401\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all Webhooks",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/webhooks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"webhooks"
+							]
+						},
+						"description": "Returns data about all the Webhooks of a company."
+					},
+					"response": [
+						{
+							"name": "The list of webhooks objects from the logged in company and user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/webhooks?api_token=<API Key>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"webhooks"
+									],
+									"query": [
+										{
+											"key": "api_token",
+											"value": "<API Key>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"status\": \"ok\",\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"company_id\": 1,\n      \"owner_id\": 1,\n      \"user_id\": 1,\n      \"event_action\": \"added\",\n      \"event_object\": \"activityType\",\n      \"subscription_url\": \"http://example.org\",\n      \"version\": \"1.0\",\n      \"is_active\": 1,\n      \"add_time\": \"2019-10-25T08:25:27.000Z\",\n      \"remove_time\": null,\n      \"type\": \"general\",\n      \"http_auth_user\": null,\n      \"http_auth_password\": null,\n      \"additional_data\": {},\n      \"remove_reason\": null,\n      \"last_delivery_time\": null,\n      \"last_http_status\": null,\n      \"admin_id\": 1\n    }\n  ]\n}"
+						},
+						{
+							"name": "Unauthorized response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/webhooks?api_token=<API Key>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"webhooks"
+									],
+									"query": [
+										{
+											"key": "api_token",
+											"value": "<API Key>"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": false,\n  \"error\": \"unauthorized access\",\n  \"errorCode\": 401\n}"
+						}
+					]
+				}
+			],
+			"description": "See <a href=\"https://pipedrive.readme.io/docs/guide-for-webhooks?ref=api_reference\" target=\"_blank\" rel=\"noopener noreferrer\">the guide for Webhooks</a> for more information."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api.pipedrive.com/v1",
+			"type": "string"
+		},
+		{
+			"key": "apiToken",
+			"value": "you_pipedrive_api_token",
+			"type": "string"
+		},
+		{
+			"key": "serverURL",
+			"value": "your_server",
+			"type": "string"
+		}
+	]
+}

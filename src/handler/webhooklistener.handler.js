@@ -8,7 +8,6 @@ class WebHookListener {
     /**
      * Listener method for processing incoming webhook events.
      * @param {object} req - The incoming request object.
-     * @param {object} res - The response object to send back to the sender.
      */
     async listener(req, res) {
         try {

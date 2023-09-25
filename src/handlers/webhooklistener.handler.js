@@ -10,6 +10,7 @@ class WebHookListener {
      * @param {object} req - The incoming request object.
      */
     async listener(req, res) {
+        console.log("Mensaje recibido", req.body);
         try {
             if (req.body.v) { // Identify the type of webhook
                 if (req.body.event == 'added.person') {
